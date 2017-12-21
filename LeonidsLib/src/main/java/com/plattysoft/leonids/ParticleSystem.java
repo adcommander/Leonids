@@ -701,7 +701,9 @@ public class ParticleSystem {
 				}
 			}
 		}
-		mDrawingView.postInvalidate();
+		if (mDrawingView != null) {
+			mDrawingView.postInvalidate();
+		}
 	}
 
 	private void cleanupAnimation() {
@@ -718,6 +720,9 @@ public class ParticleSystem {
 	public void stopEmitting () {
 		// The time to be emitting is the current time (as if it was a time-limited emitter
 		mEmittingTime = mCurrentTime;
+		for (Particle particle : mActiveParticles) {
+			particle.destroy();
+		}
 	}
 
 	/**
