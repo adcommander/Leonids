@@ -29,6 +29,7 @@ import com.plattysoft.leonids.modifiers.ParticleModifier;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Timer;
@@ -720,8 +721,12 @@ public class ParticleSystem {
 	public void stopEmitting () {
 		// The time to be emitting is the current time (as if it was a time-limited emitter
 		mEmittingTime = mCurrentTime;
-		for (Particle particle : mActiveParticles) {
-			particle.destroy();
+		synchronized(mActiveParticles) {
+			Iterator<Particle> it = mActiveParticles.iterator();
+			while (it.hasNext()) {
+				Particle p = it.next();
+				p.destroy();
+			}
 		}
 	}
 
