@@ -103,8 +103,4 @@ public class Particle {
 		mModifiers = modifiers;
 		return this;
 	}
-
-	public void destroy() {
-		mTimeToLive = 0;
-	}
 }

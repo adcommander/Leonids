@@ -702,15 +702,12 @@ public class ParticleSystem {
 				}
 			}
 		}
-		if (mDrawingView != null) {
-			mDrawingView.postInvalidate();
-		}
 	}
 
 	private void cleanupAnimation() {
 		mParentView.removeView(mDrawingView);
 		mDrawingView = null;
-		mParentView.postInvalidate();
+		//mParentView.postInvalidate();
 		mParticles.addAll(mActiveParticles);
 	}
 
@@ -721,13 +718,6 @@ public class ParticleSystem {
 	public void stopEmitting () {
 		// The time to be emitting is the current time (as if it was a time-limited emitter
 		mEmittingTime = mCurrentTime;
-		synchronized(mActiveParticles) {
-			Iterator<Particle> it = mActiveParticles.iterator();
-			while (it.hasNext()) {
-				Particle p = it.next();
-				p.destroy();
-			}
-		}
 	}
 
 	/**
