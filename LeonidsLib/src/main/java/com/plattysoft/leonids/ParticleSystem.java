@@ -702,14 +702,23 @@ public class ParticleSystem {
 				}
 			}
 		}
-	}
+        if (mDrawingView != null) {
+            // Only invalidate mDrawingsView if it isn't null.
+            mDrawingView.postInvalidate();
+        }
+    }
 
-	private void cleanupAnimation() {
-		mParentView.removeView(mDrawingView);
-		mDrawingView = null;
-		//mParentView.postInvalidate();
-		mParticles.addAll(mActiveParticles);
-	}
+    private void cleanupAnimation() {
+        // Check if views are fine.
+        if(mParentView != null && mDrawingView != null) {
+            mParentView.removeView(mDrawingView);
+            mDrawingView = null;
+            mParentView.postInvalidate();
+        }
+        if(mParticles != null) {
+            mParticles.addAll(mActiveParticles);
+        }
+    }
 
 	/**
 	 * Stops emitting new particles, but will draw the existing ones until their timeToLive expire
